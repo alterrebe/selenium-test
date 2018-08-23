@@ -4,10 +4,16 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.apache.log4j.Logger;
+
 
 public class Login1 {
     public static void main(String[] args) {
+        final Logger log = Logger.getLogger(Login1.class);
+
 // Create a new instance of the Chrome driver
         WebDriver driver = new ChromeDriver();
 // Wait For Page To Load
@@ -15,10 +21,18 @@ public class Login1 {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 // Navigate to URL
         driver.get("https://www.vodafone.cz/en");
+        log.info("Opened the website...");
 // Maximize the window.
         driver.manage().window().maximize();
 // Click on 'My Vodafone' button
-        driver.findElement(By.id("My Vodafone")).click();
+        WebElement arrow = driver.findElement(By.className("-arrow"));
+        log.info("Found arrow: " + arrow.getTagName());
+        arrow.click();
+
+// Find the form:
+        WebElement loginForm = driver.findElement(By.className("vf-nav-login"));
+        log.info("Found login form: " + loginForm.getTagName());
+
 // Enter Phone number
         driver.findElement(By.id("Phone number")).sendKeys("773010016");
 // Enter Password
